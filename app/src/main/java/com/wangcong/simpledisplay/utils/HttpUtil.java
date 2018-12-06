@@ -2,8 +2,6 @@ package com.wangcong.simpledisplay.utils;
 
 import android.util.Log;
 
-import com.wangcong.simpledisplay.Const;
-
 import java.io.IOException;
 import java.util.Map;
 

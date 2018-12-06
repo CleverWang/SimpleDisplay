@@ -1,5 +1,6 @@
 package com.wangcong.simpledisplay.utils;
 
+import com.wangcong.simpledisplay.beans.ConfigBean;
 import com.wangcong.simpledisplay.beans.DataPoint;
 
 import java.text.ParseException;
@@ -44,23 +45,50 @@ public class DataExtractUtil {
         return result;
     }
 
-    public static void main(String args[]) throws ParseException {
-        String data = "MONIITORVALE 20181205T125531Z TEMP 27 humi 18 \n" +
-                "MONIITORVALE 20181205T125537Z TEMP 27 humi 10 \n" +
-                "MONIITORVALE 20181205T125543Z TEMP 27 humi 9 \n" +
-                "MONIITORVALE 20181205T125548Z TEMP 27 humi 9 \n" +
-                "MONIITORVALE 20181205T125554Z TEMP 27 humi 9 \n" +
-                "MONIITORVALE 20181205T125601Z TEMP 27 humi 8 \n" +
-                "MONIITORVALE 20181205T125606Z TEMP 27 humi 8 \n" +
-                "MONIITORVALE 20181205T125612Z TEMP 27 humi 8 \n" +
-                "MONIITORVALE 20181205T125619Z TEMP 27 humi 8 \n";
-        List<List<DataPoint>> result = dataExtractor(data);
-        System.out.println(result.size());
-        for (DataPoint dataPoint : result.get(0)) {
-            System.out.println(dataPoint);
+    public static List<ConfigBean> configExtractor(String config) {
+        List<ConfigBean> configBeanList = new ArrayList<>();
+        if (config == null || config.length() == 0 || config == "\n")
+            return configBeanList;
+
+        String configs[] = config.split("\n");
+        for (String aconfig : configs) {
+            if (aconfig.length() == 0)
+                continue;
+            String temp[] = aconfig.split(" ");
+            if (temp.length < 3)
+                continue;
+            configBeanList.add(new ConfigBean(temp[0], temp[1], temp[2]));
         }
-        for (DataPoint dataPoint : result.get(1)) {
-            System.out.println(dataPoint);
+        return configBeanList;
+    }
+
+    /**
+     * 测试
+     *
+     * @param args
+     * @throws ParseException
+     */
+    public static void main(String args[]) throws ParseException {
+//        String data = "MONIITORVALE 20181205T125531Z TEMP 27 humi 18 \n" +
+//                "MONIITORVALE 20181205T125537Z TEMP 27 humi 10 \n" +
+//                "MONIITORVALE 20181205T125543Z TEMP 27 humi 9 \n" +
+//                "MONIITORVALE 20181205T125548Z TEMP 27 humi 9 \n" +
+//                "MONIITORVALE 20181205T125554Z TEMP 27 humi 9 \n" +
+//                "MONIITORVALE 20181205T125601Z TEMP 27 humi 8 \n" +
+//                "MONIITORVALE 20181205T125606Z TEMP 27 humi 8 \n" +
+//                "MONIITORVALE 20181205T125612Z TEMP 27 humi 8 \n" +
+//                "MONIITORVALE 20181205T125619Z TEMP 27 humi 8 \n";
+//        List<List<DataPoint>> result = dataExtractor(data);
+//        System.out.println(result.size());
+//        for (DataPoint dataPoint : result.get(0)) {
+//            System.out.println(dataPoint);
+//        }
+//        for (DataPoint dataPoint : result.get(1)) {
+//            System.out.println(dataPoint);
+//        }
+        List<ConfigBean> result = configExtractor(Const.CONFIGS_4);
+        for (ConfigBean configBean : result) {
+            System.out.println(configBean);
         }
     }
 }
