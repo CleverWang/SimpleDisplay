@@ -12,6 +12,12 @@
         android:orientation="vertical"
         android:padding="5dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="配置格式：设备ID 服务ID 数据点数 刷新间隔（空格隔开，回车换行）\n数据点数：每个图表每次展示的数据点数\n刷新间隔：图表刷新间隔"
+            android:textSize="10sp" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="输入配置：deviceId serviceId count"
+                    android:hint="输入配置：deviceId serviceId count interval"
                     android:inputType="textMultiLine" />
             </LinearLayout>
         </ScrollView>

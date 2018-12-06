@@ -32,7 +32,7 @@ public class ChartUtil {
      * @param color 绘制chart颜色
      */
     public static void drawChart(LineChart chart, final List<DataPoint> datas, String color) {
-        if (datas.size() > 0) {
+        if (chart != null && datas != null && datas.size() > 0) {
             String y_label = datas.get(0).getName(); // Y轴标识
 
             // 添加数据
@@ -71,9 +71,9 @@ public class ChartUtil {
             XAxis xAxis = chart.getXAxis();
             xAxis.setValueFormatter(formatter);
             xAxis.enableGridDashedLine(10f, 10f, 0f);
-//        YAxis yAxis = tem_chart.getAxisLeft();
+//        YAxis yAxis = chart.getAxisLeft();
 //        yAxis.setAxisMinimum(0);
-//        yAxis.setAxisMaximum(30);
+//        yAxis.setAxisMaximum(100);
 
             // 设置不能拖拉和缩放
             chart.getAxisRight().setEnabled(false);
@@ -83,7 +83,7 @@ public class ChartUtil {
 
             // 应用数据
             chart.setData(lineData);
-            // refresh
+            // 刷新
             chart.invalidate();
         }
     }

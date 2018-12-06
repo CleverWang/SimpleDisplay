@@ -1,6 +1,5 @@
 package com.wangcong.simpledisplay.utils;
 
-import java.io.IOException;
 import java.util.Map;
 
 import okhttp3.FormBody;
@@ -22,7 +21,7 @@ public class HttpUtil {
      * @param postData post需要传入的数据
      * @return 服务器返回的数据
      */
-    public static String getData(Map<String, String> postData) throws IOException {
+    public static String getData(Map<String, String> postData) throws Exception {
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder = new FormBody.Builder();
         // 添加post数据
@@ -34,7 +33,7 @@ public class HttpUtil {
                 .url(Const.SERVER_URL)
                 .post(requestBody)
                 .build();
-        String responseData = "";
+        String responseData;
         Response response;
 //        try {
         response = client.newCall(request).execute();

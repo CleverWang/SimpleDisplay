@@ -36,6 +36,7 @@ public class ShowConfigActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_config);
+
         // 绑定控件
         bindView();
 
@@ -50,22 +51,19 @@ public class ShowConfigActivity extends AppCompatActivity {
         recycle_config_display = findViewById(R.id.recycle_config_display);
         recycle_config_display.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         btn_change_config = findViewById(R.id.btn_change_config);
-//        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycle_config_display.setLayoutManager(layoutManager);
     }
 
     private void initData() {
-//        configBeanList = new ArrayList<>();
-        // 读取配置
+        // 从SharedPreferences读取配置
         SharedPreferences sharedPreferences = getSharedPreferences("experiment4", MODE_PRIVATE);
 
-        // 测试配置
-        Const.CONFIGS_4 = sharedPreferences.getString("configs", Const.CONFIGS_4_TEST);
-//        Const.CONFIGS_4 = sharedPreferences.getString("configs", ""); // 正式数据
+        // 从SharedPreferences加载配置
+        Const.CONFIGS_4 = sharedPreferences.getString("configs", Const.CONFIGS_4_TEST); // 加载失败使用测试配置
+//        Const.CONFIGS_4 = sharedPreferences.getString("configs", ""); // 加载失败使用空配置
 
-        configBeanList = DataExtractUtil.configExtractor(Const.CONFIGS_4); // 获取保存的配置
+        configBeanList = DataExtractUtil.configExtractor(Const.CONFIGS_4); // 解析保存的配置
         configAdapter = new ConfigAdapter(configBeanList);
         recycle_config_display.setAdapter(configAdapter);
     }
@@ -94,7 +92,7 @@ public class ShowConfigActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // 保存配置
+        // 保存配置到SharedPreferences
         SharedPreferences.Editor editor = getSharedPreferences("experiment4", MODE_PRIVATE).edit();
         editor.putString("configs", Const.CONFIGS_4);
         editor.apply();

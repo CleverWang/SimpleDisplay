@@ -29,7 +29,7 @@ public class ConfigAdapter extends RecyclerView.Adapter<ConfigAdapter.ViewHolder
         TextView text_config_deviceId; // deviceId显示文本
         TextView text_config_serviceId; // serviceId显示文本
         TextView text_config_count; // 数据点数显示文本
-        TextView text_config_interval; // 数据刷新间隔
+        TextView text_config_interval; // 数据刷新间隔显示文本
 
         public ViewHolder(View view) {
             super(view);
@@ -54,14 +54,13 @@ public class ConfigAdapter extends RecyclerView.Adapter<ConfigAdapter.ViewHolder
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 ConfigBean configBean = configBeanList.get(position);
-                // 转跳到图表展示界面
+                // 转跳到图表展示界面，并且传送数据
                 Intent intent = new Intent(v.getContext(), ShowChartsActivity.class);
                 intent.putExtra("deviceId", configBean.getDeviceId());
                 intent.putExtra("serviceId", configBean.getServiceId());
                 intent.putExtra("count", configBean.getCount());
                 intent.putExtra("interval", configBean.getInterval());
                 v.getContext().startActivity(intent);
-
 //                Toast.makeText(v.getContext(), "you clicked view " + configBean, Toast.LENGTH_SHORT).show();
             }
         });

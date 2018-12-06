@@ -21,9 +21,9 @@ public class DataExtractUtil {
      * @param data 服务器返回的有效数据
      * @return 数据集合的集合
      */
-    public static List<List<DataPoint>> dataExtractor(String data) throws ParseException {
+    public static List<List<DataPoint>> dataExtractor(String data) throws Exception {
         List<List<DataPoint>> result = new ArrayList<>();
-        if (data == null || data.length() == 0 || data == "\n")
+        if (data == null || data.length() == 0 || data.equals("\n"))
             return result;
         String datas[] = data.split("\n"); // 按行分割
         int datasetCnt = (datas[0].split(" ").length - 2) / 2; // 计算数据集的个数
@@ -45,9 +45,13 @@ public class DataExtractUtil {
         return result;
     }
 
+    /**
+     * @param config 配置
+     * @return 解析好的配置列表
+     */
     public static List<ConfigBean> configExtractor(String config) {
         List<ConfigBean> configBeanList = new ArrayList<>();
-        if (config == null || config.length() == 0 || config == "\n")
+        if (config == null || config.length() == 0 || config.equals("\n"))
             return configBeanList;
 
         String configs[] = config.split("\n");
@@ -68,7 +72,7 @@ public class DataExtractUtil {
      * @param args
      * @throws ParseException
      */
-    public static void main(String args[]) throws ParseException {
+    public static void main(String args[]) throws Exception {
 //        String data = "MONIITORVALE 20181205T125531Z TEMP 27 humi 18 \n" +
 //                "MONIITORVALE 20181205T125537Z TEMP 27 humi 10 \n" +
 //                "MONIITORVALE 20181205T125543Z TEMP 27 humi 9 \n" +

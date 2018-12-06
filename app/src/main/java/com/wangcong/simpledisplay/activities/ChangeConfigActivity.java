@@ -25,6 +25,7 @@ public class ChangeConfigActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_config);
+
         // 绑定控件
         bindView();
 
@@ -39,7 +40,6 @@ public class ChangeConfigActivity extends AppCompatActivity {
         edit_change_config = findViewById(R.id.edit_change_config);
         btn_change_config_cancel = findViewById(R.id.btn_change_config_cancel);
         btn_change_config_confirm = findViewById(R.id.btn_change_config_confirm);
-
     }
 
     private void initData() {
@@ -56,9 +56,8 @@ public class ChangeConfigActivity extends AppCompatActivity {
         btn_change_config_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 确认后保存配置
-                String config = edit_change_config.getText().toString();
-                Const.CONFIGS_4 = config;
+                // 确认后保存配置到全局变量CONFIGS_4
+                Const.CONFIGS_4 = edit_change_config.getText().toString();
                 finish();
             }
         });
