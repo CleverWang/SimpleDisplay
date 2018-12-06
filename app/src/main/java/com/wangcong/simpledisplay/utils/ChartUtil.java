@@ -53,7 +53,7 @@ public class ChartUtil {
             dataSet.setDrawCircleHole(false);
             dataSet.setDrawFilled(true);
             dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // 曲线显示
-            dataSet.setCubicIntensity(0.5f); // 曲率
+            dataSet.setCubicIntensity(0.1f); // 曲率
 
             LineData lineData = new LineData(dataSet);
 

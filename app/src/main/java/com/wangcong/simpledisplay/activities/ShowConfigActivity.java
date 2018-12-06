@@ -54,7 +54,6 @@ public class ShowConfigActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 //        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycle_config_display.setLayoutManager(layoutManager);
-
     }
 
     private void initData() {
@@ -63,9 +62,7 @@ public class ShowConfigActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("experiment4", MODE_PRIVATE);
 
         // 测试配置
-        String test_config = "778761a0-468b-467e-93b8-d5ad071a3a1d MONIITORVALE 100 5\n778761a0-468b-467e-93b8-d5ad071a3a1d MONIITORVALE 100 5\n";
-
-        Const.CONFIGS_4 = sharedPreferences.getString("configs", test_config);
+        Const.CONFIGS_4 = sharedPreferences.getString("configs", Const.CONFIGS_4_TEST);
 //        Const.CONFIGS_4 = sharedPreferences.getString("configs", ""); // 正式数据
 
         configBeanList = DataExtractUtil.configExtractor(Const.CONFIGS_4); // 获取保存的配置

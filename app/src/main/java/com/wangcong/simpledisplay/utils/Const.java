@@ -10,11 +10,11 @@ public class Const {
     // 实验四的配置
     public static String CONFIGS_4 = "";
 
-    // 图表更新时间
-    public static Integer SLEEP_TIME = 1000;
+    // 实验四的测试配置
+    public static String CONFIGS_4_TEST = "778761a0-468b-467e-93b8-d5ad071a3a1d MONIITORVALE 10 5\n778761a0-468b-467e-93b8-d5ad071a3a1d BatteryMon 10 5\n";
 
-    // 图表每次展示的数据个数
-    public static int DATA_COUNT = 10;
+    // 颜色池
+    public static String[] COLORS = {"#f17c67", "#db9019", "#5ed5d1", "#1a2d27", "#ff6e97", "#F1aaa6", "#376956", "#9966cc"};
 
     // 动态图表是否动态显示
     public static boolean DO_LOOP = false;
