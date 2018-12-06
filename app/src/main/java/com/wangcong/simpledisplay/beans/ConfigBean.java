@@ -23,10 +23,17 @@ public class ConfigBean {
      */
     private String count;
 
-    public ConfigBean(String deviceId, String serviceId, String count) {
+
+    /**
+     * 数据刷新展示时间间隔
+     */
+    private String interval;
+
+    public ConfigBean(String deviceId, String serviceId, String count, String interval) {
         this.deviceId = deviceId;
         this.serviceId = serviceId;
         this.count = count;
+        this.interval = interval;
     }
 
     public String getDeviceId() {
@@ -53,12 +60,21 @@ public class ConfigBean {
         this.count = count;
     }
 
+    public String getInterval() {
+        return interval;
+    }
+
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
+
     @Override
     public String toString() {
         return "ConfigBean{" +
                 "deviceId='" + deviceId + '\'' +
                 ", serviceId='" + serviceId + '\'' +
                 ", count='" + count + '\'' +
+                ", interval='" + interval + '\'' +
                 '}';
     }
 }

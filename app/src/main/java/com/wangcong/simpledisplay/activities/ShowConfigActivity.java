@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -47,6 +48,7 @@ public class ShowConfigActivity extends AppCompatActivity {
 
     private void bindView() {
         recycle_config_display = findViewById(R.id.recycle_config_display);
+        recycle_config_display.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         btn_change_config = findViewById(R.id.btn_change_config);
 //        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -59,7 +61,10 @@ public class ShowConfigActivity extends AppCompatActivity {
 //        configBeanList = new ArrayList<>();
         // 读取配置
         SharedPreferences sharedPreferences = getSharedPreferences("experiment4", MODE_PRIVATE);
-        String test_config = "778761a0-468b-467e-93b8-d5ad071a3a1d MONIITORVALE 100\n";
+
+        // 测试配置
+        String test_config = "778761a0-468b-467e-93b8-d5ad071a3a1d MONIITORVALE 100 5\n778761a0-468b-467e-93b8-d5ad071a3a1d MONIITORVALE 100 5\n";
+
         Const.CONFIGS_4 = sharedPreferences.getString("configs", test_config);
 //        Const.CONFIGS_4 = sharedPreferences.getString("configs", ""); // 正式数据
 

@@ -55,9 +55,9 @@ public class DataExtractUtil {
             if (aconfig.length() == 0)
                 continue;
             String temp[] = aconfig.split(" ");
-            if (temp.length < 3)
+            if (temp.length < 4)
                 continue;
-            configBeanList.add(new ConfigBean(temp[0], temp[1], temp[2]));
+            configBeanList.add(new ConfigBean(temp[0], temp[1], temp[2], temp[3]));
         }
         return configBeanList;
     }

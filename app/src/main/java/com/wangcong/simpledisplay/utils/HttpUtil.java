@@ -1,7 +1,5 @@
 package com.wangcong.simpledisplay.utils;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -24,7 +22,7 @@ public class HttpUtil {
      * @param postData post需要传入的数据
      * @return 服务器返回的数据
      */
-    public static String getData(Map<String, String> postData) {
+    public static String getData(Map<String, String> postData) throws IOException {
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder = new FormBody.Builder();
         // 添加post数据
@@ -38,13 +36,13 @@ public class HttpUtil {
                 .build();
         String responseData = "";
         Response response;
-        try {
-            response = client.newCall(request).execute();
-            responseData = response.body().string();
-        } catch (IOException e) {
-//            e.printStackTrace();
-            Log.d(Const.TAG, "getData: " + e.getMessage());
-        }
+//        try {
+        response = client.newCall(request).execute();
+        responseData = response.body().string();
+//        } catch (IOException e) {
+////            e.printStackTrace();
+//            Log.d(Const.TAG, "getData: " + e.getMessage());
+//        }
         return responseData;
     }
 }
