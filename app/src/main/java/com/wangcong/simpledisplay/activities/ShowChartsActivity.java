@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.wangcong.simpledisplay.R;
@@ -80,37 +81,33 @@ public class ShowChartsActivity extends AppCompatActivity {
             public void run() {
                 boolean isFirstRequest = true; // 是否是第一次请求
                 while (Const.DO_LOOP) {
-                    String response = "";
                     try {
-                        response = HttpUtil.getData(postData); // 从服务器获取数据
-                    } catch (Exception e) {
-//                    e.printStackTrace();
-                        Log.d(Const.TAG, "getData: " + e.getMessage());
-                    }
-//                    Log.d(Const.TAG, "sendRequest: " + response);
+                        String response = HttpUtil.getData(postData); // 从服务器获取数据
 
-                    int code_end_idx = response.indexOf('\n');
-                    if (code_end_idx != -1) {
-                        String code = response.substring(0, code_end_idx); // 截取第一行唯一的那个服务器响应code
-                        if (code.equals("0")) { // code为0表示数据有效
-                            if (isFirstRequest) {
-                                if (doDrawChartsFirstTime(response.substring(code_end_idx + 1))) // 第一次绘制成功才取消isFirstRequest
-                                    isFirstRequest = false;
-                            } else { // 接下来只需要更新绘制好的charts就行
-                                doDrawCharts(response.substring(code_end_idx + 1));
+                        int code_end_idx = response.indexOf('\n');
+                        if (code_end_idx != -1) {
+                            String code = response.substring(0, code_end_idx); // 截取第一行唯一的那个服务器响应code
+                            if (code.equals("0")) { // code为0表示数据有效
+                                if (isFirstRequest) {
+                                    if (doDrawChartsFirstTime(response.substring(code_end_idx + 1))) // 第一次绘制成功才取消isFirstRequest
+                                        isFirstRequest = false;
+                                } else { // 接下来只需要更新绘制好的charts就行
+                                    doDrawCharts(response.substring(code_end_idx + 1));
+                                }
+                            } else { // code为-1表示输入的配置参数有问题，请检查deviceId和serviceId；code为0表示未找到数据，请确保设备已经上传数据到IoT平台
+                                makeToastOnUI(response);
+                                Log.d(Const.TAG, "sendRequest: " + response);
                             }
-                        } else { // code为-1表示输入的配置参数有问题，请检查deviceId和serviceId；code为0表示未找到数据，请确保设备已经上传数据到IoT平台
-                            Log.d(Const.TAG, "run: " + response);
+                        } else { // 服务器响应出错
+                            makeToastOnUI(response);
+                            Log.d(Const.TAG, "sendRequest: " + response);
                         }
-                    } else { // 服务器响应出错
-                        Log.d(Const.TAG, "run: " + response);
-                    }
 
-                    try {
                         // 线程睡眠interval秒
                         Thread.sleep(interval * 1000);
-                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
+                    } catch (Exception e) {
+//                    e.printStackTrace();
+                        makeToastOnUI(e.getMessage());
                         Log.d(Const.TAG, "sendRequest: " + e.getMessage());
                     }
                 }
@@ -129,6 +126,7 @@ public class ShowChartsActivity extends AppCompatActivity {
         try {
             datas_t = DataExtractUtil.dataExtractor(data); // 解析数据得到数据集
         } catch (Exception e) {
+            makeToastOnUI(e.getMessage());
             Log.d(Const.TAG, "doDrawChartsFirstTime: " + e.getMessage());
             return false;
         }
@@ -175,6 +173,7 @@ public class ShowChartsActivity extends AppCompatActivity {
         try {
             datas_t = DataExtractUtil.dataExtractor(data);
         } catch (Exception e) {
+            makeToastOnUI(e.getMessage());
             Log.d(Const.TAG, "doDrawCharts: " + e.getMessage());
         }
         final List<List<DataPoint>> datas = datas_t;
@@ -188,6 +187,20 @@ public class ShowChartsActivity extends AppCompatActivity {
                 for (int i = 0; i < datasetCnt; i++) {
                     ChartUtil.drawChart(charts.get(i), datas.get(i), colors.get(i));
                 }
+            }
+        });
+    }
+
+    /**
+     * 在UI主线程中展示Toast
+     *
+     * @param message 需要展示的信息
+     */
+    private void makeToastOnUI(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(ShowChartsActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
